@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+import React from "react";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import Form from './components/Form'
+import Report from './components/Report'
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <div className=" min-h-screen bg-gray-100">
+        <nav className="bg-blue-400 text-white flex flex-col justify-between h-25 md:h-15 md:flex-row items-center p-5 ">
+          <div className="flex items-center">
+            <h1 className="text-3xl font-bold">FeedBacker </h1>
+            <span className="text-3xl ml-2 font-extralight">
+              - Share your Feedback
+            </span>
+          </div>
+          <div>
+            <Link to="/" className="mr-3 hover:underline">
+              Feedback Form
+            </Link>
+            <Link to="/report" className="mr-3 hover:underline">
+              Admin DashBoard
+            </Link>
+          </div>
+        </nav>
 
-export default App
+        <div>
+          <Routes>
+            <Route path="/" element={<Form />} />
+            <Route path="/report" element={<Report />} />
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
+  );
+};
+
+export default App;
