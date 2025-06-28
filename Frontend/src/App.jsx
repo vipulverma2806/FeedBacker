@@ -6,7 +6,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className=" min-h-screen bg-gray-100">
-        <nav className="bg-blue-400 text-white flex flex-col justify-between h-25 md:h-15 md:flex-row items-center p-5 ">
+        <nav className="bg-blue-400 text-white flex flex-col justify-between h-25 md:h-15 md:flex-row items-center p-5 fixed w-full ">
           <div className="flex items-center">
             <h1 className="text-3xl font-bold">FeedBacker </h1>
             <span className="text-3xl ml-2 font-extralight">
