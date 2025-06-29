@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-
+import axios from 'axios'
+import Dashboard from "./Dashboard";
 const Report = () => {
   const [auth, setAuth] = useState(false);
   const [password, setPassword] = useState("");
   const [notAuth, setNotAuth] = useState(false);
 
-  const handleLogin = () => {
-    const pass = axios.get("http://localhost:5000/getPass",password)
+  const handleLogin = async() => {
+    const pass = await axios.get(`http://localhost:5000/getPass/${password}`)
+    console.log(pass)
   
-    if (pass == password) {
+    if (pass.data) {
       setAuth(true);
       setPassword("");
       setNotAuth(false);
@@ -20,7 +22,7 @@ const Report = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       {auth ? (
-        <div>Dashboard</div>
+        <div><Dashboard/></div>
       ) : (
         <div className="flex justify-center flex-col items-center space-y-5 w-xl h-60 bg-white m-5 p-2 rounded-2xl shadow-sm mt-25">
           {notAuth ? (

@@ -29,7 +29,7 @@ const Form = () => {
         email: "",
         subject: "",
         teacherName: "",
-        rating: "",
+        rating: 0,
         comment: "",
       });
     } catch (err) {
@@ -88,11 +88,11 @@ const Form = () => {
               onChange={(e) => handleChange(e)}
               required
             >
-              <option value="" disabled>
+              <option>
                 Give rating here
               </option>
               {[1, 2, 3, 4, 5].map((rate, i) => (
-                <option value="rate">{rate}</option>
+                <option value={rate} key={i}>{rate}</option>
               ))}
             </select>
           </div>
