@@ -1,13 +1,61 @@
-import React, { useState } from "react";
-
+import React, { useDebugValue, useState } from "react";
+import axios from "axios";
 const Form = () => {
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    studentName: "",
+    email: "",
+    subject: "",
+    teacherName: "",
+    rating: "",
+    comment: "",
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await axios.post("http://localhost:5000/submit", form);
+      console.log(res.data)
+      console.log("Data received");
+
+      setSubmitted(true);
+      setForm({
+        studentName: "",
+        email: "",
+        subject: "",
+        teacherName: "",
+        rating: "",
+        comment: "",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center">
       {submitted ? (
-        <div className="flex justify-center items-center min-h-screen">ThankYou</div>
+        <div className="flex justify-center flex-col items-center min-h-screen space-y-4">
+          <h2 className="font-bold text-3xl text-green-600">ThankYou!</h2>
+          <p>Your Form has submitted successfully.</p>
+
+          <button
+            className="bg-blue-400 w-lg hover:bg-blue-800 rounded-2xl h-10 text-white font-medium text-xl"
+            onClick={() => setSubmitted(!submitted)}
+          >
+            Submit another form
+          </button>
+        </div>
       ) : (
-        <form className="flex justify-center flex-col items-center space-y-5 w-3xl bg-white m-5 pb-20 rounded-2xl shadow-sm mt-25">
+        <form
+          className="flex justify-center flex-col items-center space-y-5 w-3xl bg-white m-5 pb-20 rounded-2xl shadow-sm mt-25"
+          onSubmit={handleSubmit}
+        >
           <h1 className="text-3xl font-bold m-4">Feedback Form</h1>
           <div className="flex flex-col space-y-2 w-2xl mt-5 ">
             <label className="text-gray-700 text-xl mx-3">Subject</label>
@@ -15,20 +63,32 @@ const Form = () => {
               type="text"
               name="subject"
               className="w-full border rounded-xl mx-3 p-3"
+              value={form.subject}
+              onChange={(e) => handleChange(e)}
+              required
             />
           </div>
           <div className="flex flex-col space-y-2 w-2xl ">
             <label className="text-gray-700 text-xl mx-3">Teacher's Name</label>
             <input
               type="text"
-              name="TeacherName"
+              name="teacherName"
               className="w-full mx-3  border rounded-xl p-3"
+              value={form.teacherName}
+              onChange={(e) => handleChange(e)}
+              required
             />
           </div>
           <div className="flex flex-col space-y-2 w-2xl ">
             <label className="text-gray-700 text-xl mx-3">Rating</label>
-            <select name="rating" className="mx-3 w-40 ">
-              <option value="" disabled selected>
+            <select
+              name="rating"
+              className="mx-3 w-40 "
+              value={form.rating}
+              onChange={(e) => handleChange(e)}
+              required
+            >
+              <option value="" disabled>
                 Give rating here
               </option>
               {[1, 2, 3, 4, 5].map((rate, i) => (
@@ -41,6 +101,10 @@ const Form = () => {
             <textarea
               rows="10"
               className="border rounded-xl mx-3 min-h-30 max-h-50 p-3"
+              name="comment"
+              value={form.comment}
+              onChange={(e) => handleChange(e)}
+              required
             />
           </div>
 
@@ -51,8 +115,10 @@ const Form = () => {
               </label>
               <input
                 type="text"
-                name="subject"
-                className="w-[48%] mx-3 p-3 border rounded-xl"
+                name="studentName"
+                className="w-full md:w-[48%] mx-3 p-3 border rounded-xl"
+                value={form.studentName}
+                onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="flex flex-col space-y-2 w-2xl ">
@@ -61,8 +127,10 @@ const Form = () => {
               </label>
               <input
                 type="text"
-                name="subject"
-                className="w-[48%] mx-3 p-3 border rounded-xl "
+                name="email"
+                className="w-full md:w-[48%] mx-3 p-3 border rounded-xl "
+                value={form.email}
+                onChange={(e) => handleChange(e)}
               />
             </div>
           </div>
