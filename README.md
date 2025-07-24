@@ -36,7 +36,7 @@
 - **nodemon**
 
 ---
-## 🖼 Screenshots
+##  Screenshots
 
 ### Feedback Form
 ![Form](./Frontend/public/screenshots/Form.png)
